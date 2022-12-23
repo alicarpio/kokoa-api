@@ -11,9 +11,7 @@ export default class InMemoryMemberRepository implements MemberRepository {
     Member.create(UUID.create(), "Joangie", "Marquez", "Vice-president"),
   ];
 
-  constructor() {
-    console.log(InMemoryMemberRepository.members[0]);
-  }
+  constructor() {}
 
   async getById(id: UUID): Promise<Member | null> {
     const member = InMemoryMemberRepository.members.find((member) =>
