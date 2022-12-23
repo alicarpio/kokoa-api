@@ -1,8 +1,8 @@
 import { config } from "dotenv";
 import express from "express";
-import MemberRepository from "../domain/members/MemberRepository";
 import MemberService from "../domain/members/MemberService";
-import InMemoryMemberRepository from "../infrastructure/InMemoryMemberRepository";
+import InMemoryMemberRepository from "../infrastructure/members/InMemoryMemberRepository";
+import JsonMemberFormatter from "../infrastructure/members/JsonMemberFormatter";
 
 import memberRoutes from "./routes/members";
 
@@ -12,8 +12,9 @@ export default async function main() {
   const app = express();
   const PORT = process.env.PORT;
 
-  const memberRepository: MemberRepository = new InMemoryMemberRepository();
-  const memberService = new MemberService(memberRepository);
+  const memberRepository = new InMemoryMemberRepository();
+  const memberFormatter = new JsonMemberFormatter();
+  const memberService = new MemberService(memberRepository, memberFormatter);
 
   app.use("/v1/members", memberRoutes(memberService));
 

@@ -1,8 +1,11 @@
 import { Router } from "express";
 import MemberService from "../../domain/members/MemberService";
 import UUID from "../../domain/UUID";
+import { JsonMemberFormat } from "../../infrastructure/members/JsonMemberFormatter";
 
-export default function memberRoutes(memberService: MemberService) {
+export default function memberRoutes(
+  memberService: MemberService<JsonMemberFormat>
+) {
   const router = Router();
 
   router.get("/:id", async function (req, res) {
