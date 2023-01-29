@@ -1,4 +1,6 @@
-import expect from "../validation";
+import MaxLengthValidator from "../../validation/max_length_validator";
+import MinLengthValidator from "../../validation/min_length_validator";
+
 import UUID from "../UUID";
 import SocialMedia from "./SocialMedia";
 
@@ -37,9 +39,18 @@ export default class Member {
     lastName: string,
     role: string,
     socialMedia: SocialMedia = {}
-  ): Member {
-    expect(firstName.length).toBe.greaterThan(2).and.lessThan(100);
-    expect(lastName.length).toBe.greaterThan(2).and.lessThan(100);
+  ): Member | string[] {
+    const nameLengthValidator = new MaxLengthValidator(
+      100,
+      new MinLengthValidator(2)
+    );
+
+    if (
+      !nameLengthValidator.validate(firstName) ||
+      !nameLengthValidator.validate(lastName)
+    ) {
+      return nameLengthValidator.errors;
+    }
 
     return new Member(uuid, firstName, lastName, role, socialMedia);
   }
