@@ -25,4 +25,8 @@ export default class InMemoryMemberRepository implements MemberRepository {
     if (member === undefined) return null;
     return member;
   }
+
+  async getAll(): Promise<Member[]> {
+    return InMemoryMemberRepository.members;
+  }
 }
