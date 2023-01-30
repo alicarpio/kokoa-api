@@ -12,6 +12,7 @@ export default function memberRoutes(
     const memberId = UUID.fromString(req.params.id);
 
     if (memberId === null) {
+      // TODO: Use a library to format errors.
       return res.status(400).json({
         status: 400,
         error: `Invalid uuid: ${req.params.id}`,
@@ -28,6 +29,13 @@ export default function memberRoutes(
     }
 
     return res.status(200).json(member);
+  });
+
+  router.get("/", (req, res) => {
+    // TODO: Handle pagination.
+    return memberService
+      .getAllMembers()
+      .then((members) => res.status(200).json(members));
   });
 
   return router;

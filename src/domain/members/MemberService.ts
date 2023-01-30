@@ -12,4 +12,12 @@ export default class MemberService<Format> {
     const member = await this.memberRepository.getById(id);
     return member ? this.memberFormatter.format(member) : null;
   }
+
+  async getAllMembers(): Promise<Format[]> {
+    return this.memberRepository
+      .getAll()
+      .then((members) =>
+        members.map((member) => this.memberFormatter.format(member))
+      );
+  }
 }

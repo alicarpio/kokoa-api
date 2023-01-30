@@ -11,7 +11,7 @@ export default async function createApp() {
   const memberRepository = new InMemoryMemberRepository();
   const memberFormatter = new JsonMemberFormatter();
   const memberService = new MemberService(memberRepository, memberFormatter);
-  app.use("/v1/members", memberRoutes(memberService));
+  app.use("/api/v1/members", memberRoutes(memberService));
 
   return app;
 }

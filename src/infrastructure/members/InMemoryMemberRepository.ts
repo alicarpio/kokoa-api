@@ -6,9 +6,14 @@ export default class InMemoryMemberRepository implements MemberRepository {
   private static members: Member[] = [
     Member.create(UUID.create(), "Alexander", "Goussas", "President", {
       github: "https://github.com/aloussase",
-    }),
-    Member.create(UUID.create(), "Alina", "Carpio", "Secretaria"),
-    Member.create(UUID.create(), "Joangie", "Marquez", "Vice-president"),
+    }) as Member,
+    Member.create(UUID.create(), "Alina", "Carpio", "Secretaria") as Member,
+    Member.create(
+      UUID.create(),
+      "Joangie",
+      "Marquez",
+      "Vice-president"
+    ) as Member,
   ];
 
   constructor() {}
@@ -19,5 +24,9 @@ export default class InMemoryMemberRepository implements MemberRepository {
     );
     if (member === undefined) return null;
     return member;
+  }
+
+  async getAll(): Promise<Member[]> {
+    return InMemoryMemberRepository.members;
   }
 }
