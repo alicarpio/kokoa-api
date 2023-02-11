@@ -7,7 +7,7 @@ export interface JsonMemberFormat {
   firstName: string;
   lastName: string;
   role: string;
-  socialMedia: SocialMedia;
+  socialMedia: SocialMedia | null;
 }
 
 export default class JsonMemberFormatter
