@@ -10,7 +10,7 @@ export default class Member {
     private _firstName: string,
     private _lastName: string,
     private _role: string,
-    private _socialMedia: SocialMedia
+    private _socialMedia: SocialMedia | null
   ) {}
 
   get id(): UUID {
@@ -29,8 +29,12 @@ export default class Member {
     return this._role;
   }
 
-  get socialMedia(): SocialMedia {
+  get socialMedia(): SocialMedia | null {
     return this._socialMedia;
+  }
+
+  set socialMedia(socialMedia: SocialMedia | null) {
+    this._socialMedia = socialMedia;
   }
 
   static create(
@@ -38,7 +42,7 @@ export default class Member {
     firstName: string,
     lastName: string,
     role: string,
-    socialMedia: SocialMedia = {}
+    socialMedia: SocialMedia | null = null
   ): Member | string[] {
     const nameLengthValidator = new MaxLengthValidator(
       100,

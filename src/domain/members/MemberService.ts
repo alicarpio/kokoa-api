@@ -14,10 +14,10 @@ export default class MemberService<Format> {
   }
 
   async getAllMembers(): Promise<Format[]> {
-    return this.memberRepository
-      .getAll()
-      .then((members) =>
-        members.map((member) => this.memberFormatter.format(member))
-      );
+    return await this.memberRepository.getAll().then((members) => {
+      return members.map((member) => {
+        return this.memberFormatter.format(member);
+      });
+    });
   }
 }

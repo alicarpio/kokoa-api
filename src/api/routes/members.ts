@@ -33,9 +33,9 @@ export default function memberRoutes(
 
   router.get("/", (req, res) => {
     // TODO: Handle pagination.
-    return memberService
-      .getAllMembers()
-      .then((members) => res.status(200).json(members));
+    return memberService.getAllMembers().then((members) => {
+      return res.status(200).json(members);
+    });
   });
 
   return router;
