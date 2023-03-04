@@ -2,7 +2,7 @@
     "name": "kokoa-api",
     "version": "1.0.0",
     "description": "",
-    "main": "index.ts",
+    "main": "",
     "scripts": {
         "build": "npx tsc",
         "start": "node ./dist/index.js",
