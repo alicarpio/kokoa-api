@@ -26,3 +26,16 @@ values (uuid_generate_v4(), 'Alexander', 'Goussas', 'President'),
        (uuid_generate_v4(), 'Joangie', 'Marquez', 'Vice-president'),
        (uuid_generate_v4(), 'Yiam', 'Rodriguez', 'Member');
 
+create table events (
+    id UUID not null,
+    name text not null,
+    kind text not null,
+    eventStart timestamp not null,
+    eventEnd timestamp not null,
+    price decimal,
+
+    primary key (id)
+);
+
+insert into events (id, name, kind, eventStart, eventEnd)
+values (uuid_generate_v4(), 'CLI Week', 'HACKATHON', now(), now());

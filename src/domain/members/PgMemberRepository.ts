@@ -1,28 +1,13 @@
-import Member from "../../domain/members/Member";
-import SocialMedia from "../../domain/members/SocialMedia";
-import UUID from "../../domain/UUID";
-import MemberMapper from "./MemberMapper";
-import SocialMediaMapper from "./SocialMediaMapper";
-import MemberRepository from "../../domain/members/MemberRepository";
-
 import { Client } from "pg";
 
+import UUID from "../UUID";
+
+import Member from "./Member";
+import MemberRepository from "./MemberRepository";
+import SocialMedia from "./SocialMedia";
+
 export default class PgMemberRepository implements MemberRepository {
-  private db: Client;
-
-  constructor() {
-    this.db = new Client({
-      host: process.env.PGHOST || "0.0.0.0",
-      user: process.env.PGUSER || "kokoa",
-      password: process.env.PGPASSWORD || "kokoa",
-      database: process.env.PGDATABASE || "kokoa",
-    });
-  }
-
-  async init(): Promise<PgMemberRepository> {
-    await this.db.connect().catch((err) => console.error(err.stack));
-    return this;
-  }
+  constructor(private db: Client) {}
 
   async getById(id: UUID): Promise<Member | null> {
     return await this.db
@@ -35,7 +20,15 @@ export default class PgMemberRepository implements MemberRepository {
         [id.uuid]
       )
       .then((result) => result.rows)
-      .then((rows) => MemberMapper.fromRow(rows[0]));
+      .then((rows) => {
+        const row = rows[0];
+        return Member.create(
+          UUID.fromString(row.id)!,
+          row.first_name,
+          row.last_name,
+          row.role
+        ) as Member;
+      });
   }
 
   async getSocialMediaForMember(memberId: UUID): Promise<SocialMedia | null> {
@@ -51,7 +44,12 @@ export default class PgMemberRepository implements MemberRepository {
       .then((result) => result.rows)
       .then((rows) => {
         if (rows.length === 0) return null;
-        return SocialMediaMapper.fromRow(rows[0]);
+        const data = rows[0];
+        return {
+          github: data.github,
+          linkedin: data.linkedin,
+          pwebsite: data.pwebsite,
+        };
       });
   }
 
@@ -64,8 +62,17 @@ export default class PgMemberRepository implements MemberRepository {
     `
       )
       .then((result) => result.rows)
-      .then((rows) => rows.map((row) => MemberMapper.fromRow(row)))
-      .then(async (members) => {
+      .then((rows) =>
+        rows.map((row) => {
+          return Member.create(
+            UUID.fromString(row.id)!,
+            row.first_name,
+            row.last_name,
+            row.role
+          ) as Member;
+        })
+      )
+      .then(async (members: Member[]) => {
         for (let member of members) {
           member.socialMedia = await this.getSocialMediaForMember(member.id);
         }
