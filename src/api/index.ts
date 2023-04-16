@@ -1,9 +1,7 @@
 import express from "express";
 import { Client } from "pg";
 
-import MemberService from "../domain/members/MemberService";
-import PgMemberRepository from "../infrastructure/members/PgMemberRepository";
-import JsonMemberFormatter from "../infrastructure/members/JsonMemberFormatter";
+import PgMemberRepository from "../domain/members/PgMemberRepository";
 import memberRoutes from "./routes/members";
 
 import PgEventRepository from "../domain/events/PgEventRepository";
@@ -26,10 +24,8 @@ export default async function createApp() {
     return;
   }
 
-  const memberRepository = await new PgMemberRepository().init();
-  const memberFormatter = new JsonMemberFormatter();
-  const memberService = new MemberService(memberRepository, memberFormatter);
-  app.use("/api/v1/members", memberRoutes(memberService));
+  const memberRepository = new PgMemberRepository(pgClient);
+  app.use("/api/v1/members", memberRoutes(memberRepository));
 
   const eventRepository = new PgEventRepository(pgClient);
   app.use("/api/v1/events", eventRoutes(eventRepository));

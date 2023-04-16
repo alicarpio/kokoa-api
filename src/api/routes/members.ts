@@ -1,11 +1,9 @@
 import { Router } from "express";
-import MemberService from "../../domain/members/MemberService";
-import UUID from "../../domain/UUID";
-import { JsonMemberFormat } from "../../infrastructure/members/JsonMemberFormatter";
 
-export default function memberRoutes(
-  memberService: MemberService<JsonMemberFormat>
-) {
+import UUID from "../../domain/UUID";
+import MemberRepository from "../../domain/members/MemberRepository";
+
+export default function memberRoutes(memberRepository: MemberRepository) {
   const router = Router();
 
   router.get("/:id", async function (req, res) {
@@ -19,7 +17,7 @@ export default function memberRoutes(
       });
     }
 
-    const member = await memberService.getMemberById(memberId);
+    const member = await memberRepository.getById(memberId);
 
     if (member === null) {
       return res.status(404).json({
@@ -33,7 +31,7 @@ export default function memberRoutes(
 
   router.get("/", (req, res) => {
     // TODO: Handle pagination.
-    return memberService.getAllMembers().then((members) => {
+    return memberRepository.getAll().then((members) => {
       return res.status(200).json(members);
     });
   });
