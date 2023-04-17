@@ -1,22 +1,22 @@
-import { DecoratingValidator } from "./decorating_validator";
-import { Validator } from "./validator";
+import { DecoratingValidator } from './decorating_validator';
+import { Validator } from './validator';
 
 export default class MinLengthValidator extends DecoratingValidator<string> {
-  constructor(
-    private min: number,
-    inner: Validator<string> | null = null,
-    errors: string[] = []
-  ) {
-    super(errors, inner);
-  }
-
-  override validateThis(what: string): boolean {
-    const valid = what.length >= this.min;
-    if (!valid) {
-      this.errors.push(
-        `Expected ${what} to be greater than or equal to ${this.min}`
-      );
+    constructor(
+        private Min: number,
+        inner: Validator<string> | null = null,
+        errors: string[] = []
+    ) {
+        super(errors, inner);
     }
-    return valid;
-  }
+
+    override ValidateThis(what: string): boolean {
+        const valid = what.length >= this.Min;
+        if (!valid) {
+            this.Errors.push(
+                `Expected ${what} to be greater than or equal to ${this.Min}`
+            );
+        }
+        return valid;
+    }
 }

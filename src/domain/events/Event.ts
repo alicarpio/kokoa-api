@@ -1,28 +1,31 @@
-import UUID from "../UUID";
+import UUID from '../UUID';
+import ToJSON from '../ToJSON';
 
-export type EventKind = "TALLER" | "HACKATHON" | "PARTICIPACION" | "CHARLA";
+export type EventKind = 'TALLER' | 'HACKATHON' | 'PARTICIPACION' | 'CHARLA';
 
-export default class Event {
-  private constructor(
-    private id: UUID,
-    private name: string,
-    private kind: EventKind,
-    private eventStart: Date,
-    private eventEnd: Date,
-    private price?: number
-  ) {}
+export default class Event extends ToJSON {
+    private constructor(
+        public readonly id: UUID,
+        public readonly name: string,
+        public readonly kind: EventKind,
+        public readonly eventStart: Date,
+        public readonly eventEnd: Date,
+        public readonly price?: number
+    ) {
+        super();
+    }
 
-  static create(
-    id: UUID,
-    name: string,
-    kind: EventKind,
-    eventStart: Date,
-    eventEnd: Date,
-    price?: number
-  ) {
-    // TODO: Add validation.
-    // - Validate that eventStart < eventEnd
-    // - name != ""
-    return new Event(id, name, kind, eventStart, eventEnd, price);
-  }
+    static Create(
+        id: UUID,
+        name: string,
+        kind: EventKind,
+        eventStart: Date,
+        eventEnd: Date,
+        price?: number
+    ) {
+        // TODO: Add validation.
+        // - Validate that eventStart < eventEnd
+        // - name != ""
+        return new Event(id, name, kind, eventStart, eventEnd, price);
+    }
 }
