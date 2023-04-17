@@ -1,5 +1,5 @@
-import Event from "./Event";
+import Event from './Event';
 
 export default interface EventRepository<Id> {
-  getAll(): Promise<Array<Event>>;
+    GetAll(): Promise<Array<Event>>;
 }
