@@ -7,7 +7,7 @@ export default function EventRoutes(eventRepository: EventRepository<UUID>) {
 
     router.get('/', async (req, res) => {
         const events = await eventRepository.GetAll();
-        return res.status(200).json(events);
+        return res.status(200).json(events.map(event => event.ToJSON()));
     });
 
     return router;

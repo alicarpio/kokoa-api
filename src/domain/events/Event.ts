@@ -1,8 +1,9 @@
 import UUID from '../UUID';
+import ToJSON from '../ToJSON';
 
 export type EventKind = 'TALLER' | 'HACKATHON' | 'PARTICIPACION' | 'CHARLA';
 
-export default class Event {
+export default class Event extends ToJSON {
     private constructor(
         private id: UUID,
         private name: string,
@@ -10,7 +11,9 @@ export default class Event {
         private eventStart: Date,
         private eventEnd: Date,
         private price?: number
-    ) {}
+    ) {
+        super();
+    }
 
     static Create(
         id: UUID,

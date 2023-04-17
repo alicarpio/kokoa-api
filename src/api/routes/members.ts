@@ -26,13 +26,13 @@ export default function MemberRoutes(memberRepository: MemberRepository) {
             });
         }
 
-        return res.status(200).json(member);
+        return res.status(200).json(member.ToJSON());
     });
 
     router.get('/', (req, res) => {
         // TODO: Handle pagination.
         return memberRepository.GetAll().then(members => {
-            return res.status(200).json(members);
+            return res.status(200).json(members.map(member => member.ToJSON()));
         });
     });
 

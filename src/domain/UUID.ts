@@ -1,10 +1,14 @@
 import { v4, validate } from 'uuid';
 
+import ToJSON from './ToJSON';
+
 /**
  * Value object to manage UUIDs.
  */
-export default class UUID {
-    private constructor(private _uuid: string) {}
+export default class UUID extends ToJSON {
+    private constructor(private _uuid: string) {
+        super();
+    }
 
     get uuid() {
         return this._uuid;

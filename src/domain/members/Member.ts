@@ -2,16 +2,20 @@ import MaxLengthValidator from '../../validation/max_length_validator';
 import MinLengthValidator from '../../validation/min_length_validator';
 
 import UUID from '../UUID';
+import ToJSON from '../ToJSON';
+
 import SocialMedia from './SocialMedia';
 
-export default class Member {
+export default class Member extends ToJSON {
     private constructor(
         private _id: UUID,
         private _firstName: string,
         private _lastName: string,
         private _role: string,
         private _socialMedia: SocialMedia | null
-    ) {}
+    ) {
+        super();
+    }
 
     get id(): UUID {
         return this._id;
