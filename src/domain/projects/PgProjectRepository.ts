@@ -10,7 +10,7 @@ export default class PgProjectRepository implements ProjectRepository<UUID> {
         return await this.db
             .query(
                 `
-        select id, name, area, kind, projectDate, description, technologies, github
+        select id, name, area, description, github
           from projects
         `
             )
@@ -22,10 +22,7 @@ export default class PgProjectRepository implements ProjectRepository<UUID> {
                             UUID.FromString(row.id) as UUID,
                             row.name,
                             row.area,
-                            row.kind,
-                            row.projectDate,
                             row.description,
-                            row.technologies,
                             row.github
                         )
                     ) as Project[]
