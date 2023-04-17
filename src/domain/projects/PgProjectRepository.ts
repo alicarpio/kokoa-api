@@ -22,6 +22,7 @@ export default class PgProjectRepository implements ProjectRepository<UUID> {
                             UUID.FromString(row.id) as UUID,
                             row.name,
                             row.area,
+                            row.membersList,
                             row.description,
                             row.github
                         )
