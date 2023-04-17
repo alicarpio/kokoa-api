@@ -37,5 +37,21 @@ create table events (
     primary key (id)
 );
 
+create table projects (
+    id UUID not null,
+    name text not null,
+    area text not null,
+    kind text not null,
+    projectDate timestamp not null,
+    description text not null,
+    technologies text not null,
+    github text not null,
+
+    primary key (id)
+);
+
 insert into events (id, name, kind, eventStart, eventEnd)
 values (uuid_generate_v4(), 'CLI Week', 'HACKATHON', now(), now());
+
+insert into projects(id, name, area, kind, projectDate, description, technologies, github) 
+values (uuid_generate_v4(), 'Club Website', 'WEB', make_date(2022, 06, 18), 'Página web del club', 'Svelte, TypeScript', 'https://github.com/kokoaespol/Chocolatada');
