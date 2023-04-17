@@ -72,13 +72,14 @@ export default class PgMemberRepository implements MemberRepository {
                     ) as Member;
                 })
             )
-            .then(async (members: Member[]) => {
-                for (let member of members) {
-                    member.socialMedia = await this.GetSocialMediaForMember(
-                        member.id
-                    );
-                }
-                return members;
+            .then(async members => {
+                return await Promise.all(
+                    members.map(async member =>
+                        member.WithSocialMedia(
+                            await this.GetSocialMediaForMember(member.id)
+                        )
+                    )
+                );
             });
     }
 }

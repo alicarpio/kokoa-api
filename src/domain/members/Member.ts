@@ -8,37 +8,23 @@ import SocialMedia from './SocialMedia';
 
 export default class Member extends ToJSON {
     private constructor(
-        private _id: UUID,
-        private _firstName: string,
-        private _lastName: string,
-        private _role: string,
-        private _socialMedia: SocialMedia | null
+        public readonly id: UUID,
+        public readonly firstName: string,
+        public readonly lastName: string,
+        public readonly role: string,
+        public readonly socialMedia: SocialMedia | null
     ) {
         super();
     }
 
-    get id(): UUID {
-        return this._id;
-    }
-
-    get firstName(): string {
-        return this._firstName;
-    }
-
-    get lastName(): string {
-        return this._lastName;
-    }
-
-    get role(): string {
-        return this._role;
-    }
-
-    get socialMedia(): SocialMedia | null {
-        return this._socialMedia;
-    }
-
-    set socialMedia(socialMedia: SocialMedia | null) {
-        this._socialMedia = socialMedia;
+    WithSocialMedia(socialMedia: SocialMedia | null) {
+        return new Member(
+            this.id,
+            this.firstName,
+            this.lastName,
+            this.role,
+            socialMedia
+        );
     }
 
     static Create(

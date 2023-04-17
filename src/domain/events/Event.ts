@@ -5,12 +5,12 @@ export type EventKind = 'TALLER' | 'HACKATHON' | 'PARTICIPACION' | 'CHARLA';
 
 export default class Event extends ToJSON {
     private constructor(
-        private id: UUID,
-        private name: string,
-        private kind: EventKind,
-        private eventStart: Date,
-        private eventEnd: Date,
-        private price?: number
+        public readonly id: UUID,
+        public readonly name: string,
+        public readonly kind: EventKind,
+        public readonly eventStart: Date,
+        public readonly eventEnd: Date,
+        public readonly price?: number
     ) {
         super();
     }
