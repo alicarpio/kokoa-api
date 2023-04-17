@@ -18,6 +18,10 @@ export default class UUID extends ToJSON {
         return this.uuid == other.uuid;
     }
 
+    override ToJSON(): any {
+        return this._uuid.toString();
+    }
+
     /**
      * Create a new UUID from a generated uuid.
      */
