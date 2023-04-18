@@ -7,6 +7,9 @@ import MemberRoutes from './routes/members';
 import PgEventRepository from '../domain/events/PgEventRepository';
 import EventRoutes from './routes/events';
 
+import PgProjectRepository from '../domain/projects/PgProjectRepository';
+import ProjectRoutes from './routes/projects';
+
 export default async function CreateApp() {
     const app = express();
 
@@ -29,6 +32,9 @@ export default async function CreateApp() {
 
     const eventRepository = new PgEventRepository(pgClient);
     app.use('/api/v1/events', EventRoutes(eventRepository));
+
+    const projectRepository = new PgProjectRepository(pgClient);
+    app.use('/api/v1/projects', ProjectRoutes(projectRepository));
 
     return app;
 }
